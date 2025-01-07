@@ -32,12 +32,19 @@ fn infer(speaker: &str, text: &str) -> Result<Vec<u8>, &'static str> {
     }
 }
 
+#[allow(unused)]
 #[derive(Debug, serde::Deserialize)]
 pub struct SpeechRequest {
     /// The text to generate audio for.
     pub input: String,
     /// Id of speaker.
+    #[serde(alias = "voice")]
     pub speaker: String,
+
+    #[serde(default)]
+    pub response_format: String,
+    #[serde(default)]
+    pub speed: f32,
 }
 
 fn create_speech(speech_request: SpeechRequest) -> anyhow::Result<Vec<u8>> {
